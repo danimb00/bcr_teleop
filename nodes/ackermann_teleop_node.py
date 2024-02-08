@@ -1,10 +1,6 @@
 #! /usr/bin/env python3
 
-"""
-    Author: Gaurav Gupta
-    Email: gaurav@blackcoffeerobotics.com
-    Ref: https://stackoverflow.com/questions/510357/how-to-read-a-single-character-from-the-user
-"""
+
 
 
 import threading
@@ -12,6 +8,7 @@ import threading
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+from std_msgs.msg import Float64
 
 
 class _Getch:
@@ -62,19 +59,23 @@ class TeleopPublisher(Node):
 
     def __init__(self):
         super().__init__('bcr_teleop_node')
-        self.vel_publisher = self.create_publisher(Twist, '/cmd_vel', 1)
+        self.vel_publisher = self.create_publisher(Float64, '/commands/motor/speed', 1)
+        self.steer_publisher = self.create_publisher(Float64, '/commands/servo/steering', 1)
+
         timer_period = 0.05
-        self.timer = self.create_timer(
-            timer_period, self.velocity_publish_event)
-        self.cmd_vel_msg = Twist()
+        self.timer = self.create_timer(timer_period, self.velocity_publish_event)
+
+        self.vel_msg = Float64()
+        self.steer_msg = Float64()
 
     def set_vel(self, v, w):
         self.get_logger().info("v: %f, w: %f" % (v, w))
-        self.cmd_vel_msg.linear.x = v
-        self.cmd_vel_msg.angular.z = w
+        self.vel_msg.data = v
+        self.steer_msg.data = w
 
     def velocity_publish_event(self):
-        self.vel_publisher.publish(self.cmd_vel_msg)
+        self.vel_publisher.publish(self.vel_msg)
+        self.steer_publisher.publish(self.steer_msg)
 
 
 def main(args=None):
@@ -86,7 +87,7 @@ def main(args=None):
     # Thread for node's timer callback
     thread.start()
     v = 0.0
-    w = 0.0
+    w = 0.5
     publish_node.get_logger().info("\n\tw: increment linear velocity by 0.1,\n\
         s: decrement linear velocity by 0.1,\n\
         a: increment angular velocity by 0.1,\n\
@@ -97,18 +98,18 @@ def main(args=None):
         while (rclpy.ok()):
             key_in = getch()
             if key_in == "w":
-                v += 0.1
+                v += 200
             elif key_in == "s":
-                v -= 0.1
+                v -= 200
             elif key_in == "d":
-                w -= 0.1
-            elif key_in == "a":
                 w += 0.1
+            elif key_in == "a":
+                w -= 0.1
             elif key_in == "q":
                 break
             else:
                 v = 0.0
-                w = 0.0
+                w = 0.5
             publish_node.set_vel(v, w)
     except KeyboardInterrupt:
         pass

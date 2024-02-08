@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>bcr_teleop</name>
+  <name>keyboard_control</name>
   <version>0.0.0</version>
   <description>Keyboard teleop package</description>
-  <maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
+  <maintainer email="daniel.niedermair@esprit-engineering.com">Daniel Niedermair</maintainer>
   <license>Apache License 2.0</license>
 
   <build_depend>ament_cmake</build_depend>
