@@ -7,23 +7,18 @@ Generic (wasd) keyboard based tele-operation package to publish [geometry_msgs/T
 
 Standard Operation,
 
-`rosrun bcr_teleop bcr_teleop_node.py`
+`rosrun keyboard_control bcr_teleop_node.py`
 
-Remap to a different topic,
 
-`rosrun bcr_teleop bcr_teleop_node.py cmd_vel:=cmd_vel2`
 
 
 ### Usage
 
-	w: increment linear velocity by 0.1,
-    s: decrement linear velocity by 0.1,
+	w: increment linear velocity by 200,
+    s: decrement linear velocity by 200,
     a: increment angular velocity by 0.1,
     d: decrement angular velocity by 0.1,
     space: zero velocity command,
     q: QUIT
 
 
-#### Published Topics
-
-- cmd_vel: [geometry_msgs/Twist](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/Twist.html)
