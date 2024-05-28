@@ -7,6 +7,7 @@ find_package(geometry_msgs REQUIRED)
 
 install(PROGRAMS
     nodes/ackermann_teleop_node.py
+    nodes/lidar_velo_control.py
     DESTINATION lib/${PROJECT_NAME}
 )
 
