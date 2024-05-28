@@ -99,12 +99,20 @@ def main(args=None):
             key_in = getch()
             if key_in == "w":
                 v += 200
+                if v >= 2200.0:
+                    v = 2200.0
             elif key_in == "s":
                 v -= 200
+                if v <= -2200.0:
+                    v = -2200.0
             elif key_in == "d":
                 w += 0.1
+                if w >= 1.0:
+                    w = 1.0
             elif key_in == "a":
                 w -= 0.1
+                if w <= -1.0:
+                    w = -1.0
             elif key_in == "q":
                 break
             else:
